@@ -47,9 +47,9 @@ public class BluetoothChatService {
 
     // Unique UUID for this application
     private static final UUID MY_UUID_SECURE =
-            UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
+            UUID.fromString("802a2f66-b98b-11e7-abc4-cec278b6b50a");
     private static final UUID MY_UUID_INSECURE =
-            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
+            UUID.fromString("802a31e6-b98b-11e7-abc4-cec278b6b50a");
 
     // Member fields
     private final BluetoothAdapter mAdapter;

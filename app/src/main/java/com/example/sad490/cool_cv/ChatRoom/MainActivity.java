@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.sad490.cool_cv.R;
+import com.example.sad490.cool_cv.Bluetooth.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
