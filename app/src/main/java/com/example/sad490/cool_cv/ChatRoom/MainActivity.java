@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initMsgs();
+        // initMsgs();
 
         inputText = (EditText)findViewById(R.id.input_text);
         send = (Button)findViewById(R.id.send);
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         // mConversationView.setAdapter(mConversationArrayAdapter);
 
         // Initialize the compose field with a listener for the return key
-        mOutEditText.setOnEditorActionListener(mWriteListener);
+        // mOutEditText.setOnEditorActionListener(mWriteListener);
 
         // Initialize the send button with a listener that for click events
         /**
