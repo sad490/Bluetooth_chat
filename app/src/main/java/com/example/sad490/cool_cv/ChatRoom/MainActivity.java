@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,8 +28,6 @@ import com.example.sad490.cool_cv.Bluetooth.DeviceListActivity;
 import com.example.sad490.cool_cv.R;
 import com.example.sad490.cool_cv.Bluetooth.Constants;
 import com.example.sad490.cool_cv.Bluetooth.BluetoothChatService;
-
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,13 +104,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String content = inputText.getText().toString();
-                if (!"".equals(content)){
-                    Msg msg = new Msg(content, Msg.TYPE_SENT);
-                    msgList.add(msg);
-                    adapter.notifyItemChanged(msgList.size() - 1);
-                    msgRecyclerView.scrollToPosition(msgList.size() - 1);
-                    inputText.setText("");
-                }
+                sendMessage(content);
             }
         });
 
@@ -156,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
         mOutEditText.setOnEditorActionListener(mWriteListener);
 
         // Initialize the send button with a listener that for click events
+        /**
         mSendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send a message using content of the edit text widget
@@ -166,12 +157,13 @@ public class MainActivity extends AppCompatActivity {
                     sendMessage(message);
                 }
             }
-        });
+        });**/
+
         // Initialize the BluetoothChatService to perform bluetooth connections
         mChatService = new BluetoothChatService(this, mHandler);
 
         // Initialize the buffer for outgoing messages
-        mOutStringBuffer = new StringBuffer("");
+        // mOutStringBuffer = new StringBuffer("");
     }
 
     /**
@@ -193,10 +185,17 @@ public class MainActivity extends AppCompatActivity {
             mChatService.write(send);
 
             // Reset out string buffer to zero and clear the edit text field
-            mOutStringBuffer.setLength(0);
-            mOutEditText.setText(mOutStringBuffer);
+            // mOutStringBuffer.setLength(0);
+            // mOutEditText.setText(mOutStringBuffer);
+            Msg msg = new Msg(message, Msg.TYPE_SENT);
+            msgList.add(msg);
+            adapter.notifyItemChanged(msgList.size() - 1);
+            msgRecyclerView.scrollToPosition(msgList.size() - 1);
+            inputText.setText("");
+
         }
     }
+
     private void initMsgs(){
         Msg msg1 = new Msg("Hello guy. ", Msg.TYPE_RECEIVED);
         msgList.add(msg1);
@@ -239,7 +238,8 @@ public class MainActivity extends AppCompatActivity {
      * @param resId a string resource ID
      */
     private void setStatus(int resId) {
-
+        return ;
+        // Not Need !!!
         /**Fragmentactivity activity = getactivity();
         if (null == activity) {
             return;
@@ -260,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
      * @param subTitle status
      */
     private void setStatus(CharSequence subTitle) {
+        return ;
         /**
         FragmentActivity activity = getActivity();
         if (null == activity) {
@@ -303,13 +304,13 @@ public class MainActivity extends AppCompatActivity {
                     byte[] writeBuf = (byte[]) msg.obj;
                     // construct a string from the buffer
                     String writeMessage = new String(writeBuf);
-                    mConversationArrayAdapter.add("Me:  " + writeMessage);
+                    msgList.add(new Msg(writeMessage, Msg.TYPE_SENT));
                     break;
                 case Constants.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
+                    msgList.add(new Msg(mConnectedDeviceName + ":  " + readMessage, Msg.TYPE_RECEIVED));
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
@@ -320,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
                                 + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
                     }
                      */
+                    Toast.makeText(getApplicationContext(), "Connect to " + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
                     break;
                 case Constants.MESSAGE_TOAST:
                     /**
@@ -328,6 +330,9 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                      */
+                    Toast.makeText(getApplicationContext(), msg.getData().getString(Constants.TOAST), Toast.LENGTH_SHORT).show();
+                    break;
+                default:
                     break;
             }
         }
